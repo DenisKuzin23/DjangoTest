@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Author(models.Model):
     rating = models.IntegerField()
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -23,6 +24,14 @@ class Post(models.Model):
     rating = models.IntegerField()
     date = models.DateTimeField()
 
+    def like(self):
+        self.rating += 1
+        self.save(update_fields=['rating'])
+
+    def dislike(self):
+        self.rating -= 1
+        self.save(update_fields=['rating'])
+
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -35,3 +44,11 @@ class Comment(models.Model):
     text = models.TextField()
     date = models.DateTimeField()
     rating = models.IntegerField()
+
+    def like(self):
+        self.rating += 1
+        self.save(update_fields=['rating'])
+
+    def dislike(self):
+        self.rating -= 1
+        self.save(update_fields=['rating'])
