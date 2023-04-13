@@ -6,6 +6,18 @@ class Author(models.Model):
     rating = models.IntegerField()
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
+    def update_rating(self):
+        rrat = 0
+        for post in self.post_set.all():
+            rrat += post.rating * 3
+            for comment in post.comment_set.all():
+                if comment.user.author == self:
+                    rrat += comment.rating
+                if post.type == PostType.POST:
+                    rrat += comment.rating
+            self.rating = rrat
+        self.save(update_fields=['rating'])
+
 
 class Category(models.Model):
     cat_name = models.CharField(max_length=256, unique=True)
@@ -31,6 +43,9 @@ class Post(models.Model):
     def dislike(self):
         self.rating -= 1
         self.save(update_fields=['rating'])
+
+    def preview(self):
+        return self.text[:123] + '...'
 
 
 class PostCategory(models.Model):
