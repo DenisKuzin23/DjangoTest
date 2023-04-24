@@ -5,7 +5,8 @@
     <tbody>
         {% for post in post_list %}
         <tr>
-            <td style="width: 20%">{{ post.topic }}</td><td style="width: 20%">{{ post.date }}</td><td>{{ post.preview }}</td>
+            <td style="width: 20%">{{ post.topic }}</td><td style="width: 20%">{{ post.date }}</td>
+            <td><a href="{% url 'new' post.id %}">{{ post.preview }}</a></td>
         </tr>
         {% endfor %}
     </tbody>
