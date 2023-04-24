@@ -1,3 +1,5 @@
 from django.shortcuts import render
+from . import models
 
-# Create your views here.
+def news(request):
+    return render(request, 'news.html', {'post_list' : models.Post.objects.all()})

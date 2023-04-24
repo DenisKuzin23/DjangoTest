@@ -45,7 +45,7 @@ class Post(models.Model):
         self.save(update_fields=['rating'])
 
     def preview(self):
-        return self.text[:123] + '...'
+        return self.text[:20] + '...'
 
 
 class PostCategory(models.Model):
